@@ -1,0 +1,15 @@
+# Copy to ~/.dbt/profiles.yml (merge with existing profiles if you have any).
+# Adjust host/port if you changed docker-compose mappings.
+
+custom_elt:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      port: 5434
+      user: postgres
+      password: secret
+      dbname: destination_db
+      schema: analytics
+      threads: 4

@@ -1,0 +1,6 @@
+# FreeCodeCamp data engineering course — dbt lesson (PostgreSQL)
+# Use Python 3.9–3.12 (dbt 1.8 is not compatible with 3.13+ yet on all platforms).
+#   macOS example: brew install python@3.12 && /opt/homebrew/bin/python3.12 -m venv .venv
+#   Then: source .venv/bin/activate && pip install -r requirements.txt
+dbt-core==1.8.9
+dbt-postgres==1.8.2

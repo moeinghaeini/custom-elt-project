@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: elt_raw
+    description: Tables replicated by the Docker ELT job into destination Postgres.
+    schema: public
+    tables:
+      - name: films
+      - name: users

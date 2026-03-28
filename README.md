@@ -28,8 +28,46 @@ This repository contains a custom Extract, Load, Transform (ELT) project that ut
 
 ## Getting Started
 
-1. Ensure you have Docker and Docker Compose installed on your machine.
+1. Install [Docker](https://docs.docker.com/get-started/) and start Docker Desktop (macOS/Windows) or the Docker daemon (Linux). Use `docker compose version` to confirm Compose v2.
 2. Clone this repository.
-3. Navigate to the repository directory and run `docker-compose up`.
-4. Once all containers are up and running, the ELT process will start automatically.
-5. After the ELT process completes, you can access the source and destination PostgreSQL databases on ports 5433 and 5434, respectively.
+3. From the repository directory run `docker compose up --build`.
+4. When the `elt_script` service exits successfully, the load is complete. Postgres keeps running until you stop Compose; source is on port **5433**, destination on **5434** (user/password: `postgres` / `secret`).
+
+## FreeCodeCamp data engineering course
+
+Official companion resources ( explanations, copy-paste snippets ): [FreeCodeCamp Data Engineering Course Resources](https://transparent-trout-f2f.notion.site/FreeCodeCamp-Data-Engineering-Course-Resources-e9d2b97aed5b4d4a922257d953c4e759).
+
+| Topic | Notion lesson |
+|-------|----------------|
+| SQL | [SQL](https://transparent-trout-f2f.notion.site/SQL-7bc979523659472d8c2b6e36e64ff113) |
+| This ELT pipeline | [Creating a Data Pipeline from Scratch](https://transparent-trout-f2f.notion.site/Creating-a-Data-Pipeline-from-Scratch-79164f9e63de482284a9c15b30af567d) |
+| dbt | [dbt](https://transparent-trout-f2f.notion.site/dbt-65d25d721870440c82a491e883f85c6c) — use the `dbt/` folder in this repo |
+| Airflow | [Airflow](https://transparent-trout-f2f.notion.site/Airflow-0328f9ac3fd84001835a00ec9bd6c25a) and [Airflow DC Structure](https://transparent-trout-f2f.notion.site/Airflow-DC-Structure-d97053d335cf48a5906e5fc002540451) |
+| Airbyte | [Airbyte](https://transparent-trout-f2f.notion.site/Airbyte-8aba108853c74126a338fe890422a737) — clone [airbytehq/airbyte](https://github.com/airbytehq/airbyte) and follow their Docker instructions; UI at `http://localhost:8000` |
+
+**Git:** [Course repo (this project)](https://github.com/justinbchau/custom-elt-project/tree/main)
+
+### Python and dbt (optional, for the dbt module)
+
+dbt 1.8 needs **Python 3.9–3.12**. If your default `python3` is newer (for example 3.14), install 3.12 and create the virtualenv with that interpreter (on macOS with Homebrew: `brew install python@3.12`).
+
+```bash
+/opt/homebrew/bin/python3.12 -m venv .venv   # adjust path if needed
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+Then follow [`dbt/README.md`](dbt/README.md).
+
+### Re-running the ELT job on a clean destination
+
+If Postgres data volumes already exist from a previous run, replaying the dump can hit “already exists” errors. Reset volumes and start again:
+
+```bash
+docker compose down -v
+docker compose up --build
+```
+
+### Airbyte OSS (separate install)
+
+Airbyte is not bundled here. With Docker available, clone the [Airbyte repo](https://github.com/airbytehq/airbyte) into another directory and use their `docker compose` workflow so the stack does not conflict with this project’s ports.

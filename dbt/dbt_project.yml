@@ -1,0 +1,16 @@
+name: "custom_elt"
+version: "1.0.0"
+config-version: 2
+
+profile: "custom_elt"
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  custom_elt:
+    +materialized: view
